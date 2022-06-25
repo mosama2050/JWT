@@ -2,6 +2,9 @@ package com.example.authentication.controller;
 
 import java.util.Objects;
 
+import com.example.authentication.model.UserDto;
+import com.example.authentication.model.Users;
+import com.example.authentication.service.JwtUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -32,6 +35,8 @@ public class JwtAuthenticationController {
 
 	@Autowired
 	private UserDetailsService jwtInMemoryUserDetailsService;
+	@Autowired
+	private JwtUserDetailsService jwtUserDetailsService;
 
 	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest)
@@ -45,6 +50,11 @@ public class JwtAuthenticationController {
 		final String token = jwtTokenUtil.generateToken(userDetails);
 
 		return ResponseEntity.ok(new JwtResponse(token));
+	}
+
+	@RequestMapping(value = "/register", method = RequestMethod.POST)
+	public ResponseEntity<?> saveUser(@RequestBody UserDto user) throws Exception {
+		return ResponseEntity.ok(jwtUserDetailsService.save(user));
 	}
 
 	private void authenticate(String username, String password) throws Exception {
