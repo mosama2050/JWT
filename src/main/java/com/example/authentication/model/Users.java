@@ -4,17 +4,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import javax.validation.constraints.Size;
 @Entity
@@ -24,6 +14,7 @@ public class Users   implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
 
@@ -38,7 +29,7 @@ public class Users   implements Serializable {
 
 
     @Column(name = "enabled")
-    private int enabled;
+    private boolean enabled;
 
     @Column(name = "first_name")
     private String firstName;
@@ -47,4 +38,8 @@ public class Users   implements Serializable {
 
     @Column(name = "last_name")
     private String lastName;
+
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    private Role role;
 }

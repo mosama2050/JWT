@@ -2,7 +2,6 @@ package com.example.authentication.controller;
 
 import java.util.Objects;
 
-import com.example.authentication.model.UserDto;
 import com.example.authentication.model.Users;
 import com.example.authentication.service.JwtUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +52,7 @@ public class JwtAuthenticationController {
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public ResponseEntity<?> saveUser(@RequestBody UserDto user) throws Exception {
+	public ResponseEntity<?> saveUser(@RequestBody Users user) throws Exception {
 		return ResponseEntity.ok(jwtUserDetailsService.save(user));
 	}
 
